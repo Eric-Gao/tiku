@@ -1,0 +1,60 @@
+<!-- BEGIN PAGE HEADER-->
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="{{urlfor " SystemController.Index "}}">首页</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <span>系统设置</span>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <span>产品管理</span>
+        </li>
+    </ul>
+    <div class="page-toolbar">
+        <!-- 页面工具栏 -->
+        <div class="btn-group pull-right">
+            <div class="btn-group">
+                <button class="btn btn-info" onclick="AddFun()">
+                    <i class="icon-plus"></i> 添加
+                </button>
+                <button class="btn btn-primary" onclick="ExpandAllFun()">
+                    <i class="fa fa-expand"></i> 全部展开
+                </button>
+                <button class="btn btn-warning" onclick="CollapseAllFun()">
+                    <i class="fa fa-compress"></i> 全部折叠
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- END PAGE BAR -->
+<!-- END PAGE HEADER-->
+<!-- Content Header (Page header) -->
+<div class="row margin-top-10">
+    <div class="col-md-12">
+        <div class="responsive" style="overflow:auto;">
+            <table id="treeGrid" class="table  table-bordered table-hover margin-top-10 tablelayoutfix">
+                <thead>
+                    <tr>
+                        <th width="200">简称</th>
+                        <th width="90" class="align-center">ProductID</th>
+                        <th width="200">AppInfo</th>
+                        <th width="140">所属产品包</th>
+                        <th width="80" class="align-center">试题导入</th>
+                        <th width="80" class="align-center">试卷导入</th>
+                        <th width="70" class="align-center">顺序</th>
+                        <th width="70" class="align-center">状态</th>
+                        <th width="140">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

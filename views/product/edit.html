@@ -1,0 +1,198 @@
+<div class="portlet-body form">
+    <!-- BEGIN FORM-->
+    <form id="thisForm" class="horizontal-form">
+        <input type="hidden" id="OldProdcutID" name="OldProdcutID" value="{{.m.ProductId}}" />
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">名称
+                            <span class="required"> * </span>
+                        </label>
+                        <input type="text" class="form-control" placeholder="最多可以输入 32 个字符" name="Name" value="{{.m.Name}}">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">产品ID
+                            <span class="required"> * </span>
+                        </label>
+                        <input type="text" class="form-control" placeholder="正整数，唯一，保存后不可修改" name="ProductId" id="ProductId" value="{{if .m.ProductId>0 .m.ProductId+"
+                            "}}{{else " "}}{{end}}" {{if .m.ProductId>0 "readonly"}}{{end} >
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">简称
+                            <span class="required"> * </span>
+                        </label>
+                        <input type="text" class="form-control" placeholder="最多可以输入 8 个字符" name="ShortName" value="{{.m.ShortName}}">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">所属项目
+                            <span class="required"> * </span>
+                        </label>
+                        <select class="bs-select form-control" name="ProjectID">
+                            <option value="">- 请选择 -</option>
+                            {{range .projectList}}
+                            <option value="{{.ProjectId}}" {{if .ProjectId=. m.ProjectId}} "selected"{{end}}>
+                                @project.Name
+                            </option>
+                            {{end}}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">Code</label>
+                        <input type="text" class="form-control" placeholder="最多可以输入 32 个字符" name="Code" value="@Model.Code">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">父产品</label>
+                        <select class="bs-select form-control" data-size="10" name="ParentID">
+                            <option value="">- 请选择 -</option>
+                            @foreach (var p in prarentList) {
+                            <option value="@p.ProductID" @Html.Raw(p.ProductID==M odel.ParentID ? "selected" : "") @Html.Raw(p.HtmlDisabled || p.IsDeleted
+                                ? "disabled" : "")>
+                                @if (p.Level > 0) { @Html.Raw(StringTools.Repreat("&nbsp;", p.Level * 4) + "|-") } @Html.Raw(p.ShortName)
+                            </option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">APPInfo</label>
+                        <input type="text" class="form-control " name="APPInfo" placeholder="最多可以输入 64 个字符" value="@Model.APPInfo">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">所属产品包</label>
+                        <select class="bs-select form-control" data-size="10" name="PackageID">
+                            <option value="">- 请选择 -</option>
+                            @foreach (var p in packageList) {
+                            <option value="@p.ProductID" @Html.Raw(p.ProductID==M odel.PackageID ? "selected" : "")>
+                                @if (p.Level > 0) { @Html.Raw(StringTools.Repreat("&nbsp;", p.Level * 4) + "|-") } @Html.Raw(p.ShortName)
+                            </option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">产品Logo</label>
+                        <div class="fileinput @Html.Raw(LogoExsists ? " fileinput-exists " : "fileinput-new ") display-block" data-provides="fileinput">
+                            <div class="fileinput-new thumbnail" style="width: 240px; height: 160px;">
+                                <img src="~/Content/assets/global/img/no-image.png" alt="" />
+                            </div>
+                            <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 240px; max-height: 160px;">
+                                @Html.Raw(LogoExsists ? "
+                                <img src=\ "" + Url.Content(Model.Logo) + "\" style=\ "max-height: 150px;\" alt=\ "\" />" : "")
+                            </div>
+                            <div>
+                                <span class="btn default btn-file">
+                                    <span class="fileinput-new"> 选择图片 </span>
+                                    <span class="fileinput-exists"> 更换 </span>
+                                    <input type="file" name="fileAPPPic" id="inputLogo">
+                                </span>
+                                <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> 移除 </a>
+                            </div>
+                        </div>
+                        <input type="hidden" name="Logo" id="Logo" value="@Model.Logo">
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">APP Logo
+                            <span class="required"> * </span> (200px*200px，不大于50KB)</label>
+                        <div class="fileinput @Html.Raw(AppLogoExsists ? " fileinput-exists " : "fileinput-new ") display-block" data-provides="fileinput">
+                            <div class="fileinput-new thumbnail" style="width: 240px; height: 160px;">
+                                <img src="~/Content/assets/global/img/no-image.png" alt="" />
+                            </div>
+                            <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 240px; max-height: 160px;">
+                                @Html.Raw(AppLogoExsists ? "
+                                <img src=\ "" + Url.Content(Model.AppLogo) + "\" style=\ "max-height: 150px;\" alt=\ "\" />" : "")
+                            </div>
+                            <div>
+                                <span class="btn default btn-file">
+                                    <span class="fileinput-new"> 选择图片 </span>
+                                    <span class="fileinput-exists"> 更换 </span>
+                                    <input type="file" name="fileAPPPic" id="inputAppLogo">
+                                </span>
+                                <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> 移除 </a>
+                            </div>
+                        </div>
+                        <input type="hidden" name="AppLogo" id="AppLogo" value="@Model.AppLogo">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">是否启用试题导入功能</label>
+                        <select class="bs-select form-control" name="QuestionImportEnabled">
+                            @foreach (var item in EnumTool.GetTextValueList
+                            <EnableOrNo>(-1)) {
+                                <option value="@item.Value" @Html.Raw(Model.QuestionImportEnabled==i tem.Value ? "selected" : "")>
+                                    @item.Text
+                                </option>
+                                }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">是否启用试卷导入功能</label>
+                        <select class="bs-select form-control" name="ExamImportEnabled">
+                            @foreach (var item in EnumTool.GetTextValueList
+                            <EnableOrNo>(-1)) {
+                                <option value="@item.Value" @Html.Raw(Model.ExamImportEnabled==i tem.Value ? "selected" : "")>
+                                    @item.Text
+                                </option>
+                                }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">顺序
+                            <span class="required"> * </span>
+                        </label>
+                        <input type="text" class="form-control" name="Weight" placeholder="" value="@Model.Weight">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">权限码（弃用）</label>
+                        <input type="text" class="form-control" name="AuthorCode" placeholder="拥有本权限码的用户将拥有本产品的管理权限" value="@Model.AuthorCode" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label">备注</label>
+                        <input type="text" class="form-control" name="Memo" placeholder="" value="@Model.Memo">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- END FORM-->
+</div>

@@ -1,0 +1,102 @@
+@charset "utf-8";
+.margin-top-0{
+  margin-top: 0!important;
+}
+.margin-bottom-0{
+  margin-bottom: 0!important;
+}
+.padding-top-0{
+  padding-top: 0!important;
+}
+.padding-bottom-0{
+  padding-bottom: 0!important;
+}
+
+.fixed-table-pagination{
+  padding: 0 10px!important;
+}
+.portlet{
+  &.light{
+    padding: 5px 10px;
+    >.portlet-title{
+      min-height: 30px;
+    }
+  }
+}
+.mt-checkbox, .mt-radio{
+  margin-bottom: 0;
+}
+.input-group-addon{
+&.noboder {
+  border: none !important;
+}
+  &.nobackground
+  {
+    background: none;
+  }
+}
+.form-group{
+  margin-bottom: 10px;
+}
+.form {
+  .form-actions{
+    padding: 5px 20px;
+  }
+}
+.ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.page-header.navbar .page-logo .logo-default {
+  margin-top: 12px;
+}
+.background-white
+{
+ background: #ffffff;
+}
+.width-auto{
+  width:auto;
+}.display-block{
+   display:block !important;
+ }
+ .align-center{
+   text-align: center;
+ }
+.align-left{
+  text-align: left;
+}
+.align-right{
+  text-align: right;
+}
+ .help-block{ /*fix*/
+   margin-top: 0;
+   margin-bottom: 0;
+   padding:0;
+ }
+.JColResizer > tbody > tr > td , .JColResizer > tbody > tr > th { /*表格列宽插件fix*/
+  padding-left: 8px!important;
+  padding-right: 8px!important;
+  &.bs-checkbox{
+    overflow: visible!important;
+  }
+}
+.highlight{
+  background-color: #2be7ed!important;
+  font-weight: bolder;
+  font-color:#32C5D2!important;
+  border-color:#32C5D2!important;
+}
+.form .form-body, .portlet-form .form-body{
+  padding: 10px;
+}
+.tabbable-line>.tab-content{
+  padding: 10px 0;
+}
+.form .form-actions.right, .portlet-form .form-actions.right {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.break-all{
+  word-break: break-all;
+}

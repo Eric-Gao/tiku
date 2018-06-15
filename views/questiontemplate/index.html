@@ -1,0 +1,52 @@
+<!-- BEGIN PAGE HEADER-->
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="{{urlfor " SystemController.Index "}}">首页</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <span>基本数据管理</span>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <span>题型管理</span>
+        </li>
+    </ul>
+    <div class="page-toolbar">
+        <!-- 页面工具栏 -->
+    </div>
+</div>
+<!-- END PAGE BAR -->
+<!-- END PAGE HEADER-->
+<!-- Content Header (Page header) -->
+<div class="row margin-top-15">
+    <div class="col-md-12">
+        <form id="SearchForm">
+            <input type="text" class="form-control input-medium input-inline" placeholder="全称" id="NameLike" name="NameLike" /> &nbsp;
+            <div class="btn-group">
+                <button type="button" id="btnSearch" class="btn btn-warning">
+                    <i class="fa fa-search"></i>
+                    搜索
+                </button>
+                <button type="button" id="btnClearSearch" class="btn btn-default">
+                    <i class="fa fa-eraser"></i>
+                    清除
+                </button>
+            </div>
+        </form>
+        <div class="btn-group" id="toolbar">
+            <button class="btn btn-info" onclick="">
+                <i class="icon-plus"></i> 添加
+            </button>
+            <button class="btn btn-danger table-btn-check-enable" disabled onclick="DeleteFun()">
+                <i class="icon-trash"></i> 删除
+            </button>
+            <button class="btn blue" onclick="CopyFun()">
+                <i class="fa fa-sign-in"></i> 复制
+            </button>
+        </div>
+        <table id="dataGrid"></table>
+    </div>
+</div>

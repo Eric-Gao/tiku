@@ -1,0 +1,164 @@
+<script src="/static/assets/global/plugins/jquery-treetable/js/jquery.treetable.js"></script>
+<script src="/static/assets/global/plugins/x-editable/js/bootstrap-editable.min.js"></script>
+<!-- 列宽插件 -->
+<script src="/static/assets/global/plugins/colResizable-1.6/colResizable-1.6.min.js"></script>
+<script>
+    var $treeGrid = $('#treeGrid');
+    $(function () {
+        pageInit();
+    });
+    function pageInit() {
+
+        $.sdpost('{{urlfor "ProductController.TreeGrid"}}', {}, function (data) {
+            if (data.code === 0) {
+                showDatas(data.obj);
+                //EditableInit('@CanEdit' === 'True');
+            } else {
+                layer.alert(data.msg, { icon: 2, title: '错误' });
+            }
+        }, false);
+    }
+    function showDatas(data) {
+        $('tbody', $treeGrid).html('');
+        $treeGrid.treetable('destroy');
+        var html = [];
+        $(data).each(function (i, e) {
+            html.push('<tr data-tt-id="' + e.ProductID + '" data-tt-parent-id="' + e.ParentID + '">');
+            html.push('<td class="ellipsis" title="' + e.ShortName + '">' + e.ShortName + '</td>');
+            html.push('<td class="align-center">' + e.ProductID + '</td>');
+            html.push('<td class="ellipsis"  title="' + ScriptTool.showstr(e.APPInfo) + '">' + ScriptTool.showstr(e.APPInfo) + '</td>');
+            html.push('<td class="ellipsis" data-package-id="' + e.PackageID + '" title="' + e.PackageShortName + '">' + e.PackageShortName + '</td>');
+            //html.push('<td class="ellipsis"  title="' + ScriptTool.showstr(e.AuthorCode) + '">' + ScriptTool.showstr(e.AuthorCode) + '</td>');
+            html.push('<td class="align-center">' + ScriptTool.showenable(e.QuestionImportEnabled) + '</td>');
+            html.push('<td class="align-center">' + ScriptTool.showenable(e.ExamImportEnabled) + '</td>');
+            html.push('<td class="align-center" ><a href="javascript:;" class="editable-weight" data-pk="' + e.ProductID + '" data-name="Weight">' + e.Weight + '</a></td>');
+            html.push('<td class="align-center" >' + GetIsDeletedText(e.IsDeleted) + '</a></td>');
+            html.push('<td>');
+            if (!e.IsDeleted) {
+                html.push('  <div class="btn-group">');
+                html.push('    <button class="btn btn-primary btn-xs" onclick="EditFun(' + e.ProductID + ')"><i class="icon-pencil"></i> 编辑</button>');
+                if ('@CanDelete' == 'True' && e.ChildrenCount === 0) {
+                    html.push('    <button class="btn btn-danger btn-xs" onclick="DeleteFun(' + e.ProductID + ')"><i class="icon-trash"></i> 删除</button>');
+                }
+                html.push('  </div>');
+            }
+            html.push('</td>');
+            html.push('</tr>');
+        });
+        $('tbody', $treeGrid).html(html.join(''));
+        //加载,初始化
+        $treeGrid.treetable({
+            expandable: true,
+            clickableNodeNames: false,
+            onNodeCollapse: function () {
+                //保存展开的节点id到cookie
+                ScriptTool.saveExpandStatus('treeGrid');
+            },
+            onNodeExpand: function () {
+                //保存展开的节点id到cookie
+                ScriptTool.saveExpandStatus('treeGrid');
+            },
+        });
+        //从cookie里读取展开的节点id数据并使用
+        ScriptTool.loadExpandStatus('treeGrid');
+
+        $treeGrid.colResizable({
+            liveDrag: true,
+            gripInnerHtml: "<div class='grip'></div>",
+            draggingClass: "dragging",
+            resizeMode: 'fit',
+            minWidth: 40,
+        });
+    }
+    function GetIsDeletedText(value) {
+        var texts = [{ Text: '未删除', Value: false }, { Text: '已删除', Value: true },]
+        return ScriptTool.showenum(value, texts);
+    }
+    //初始化顺序可编辑
+    //function EditableInit(doEdit) {
+    //if (doEdit === false) return;
+    //$('.editable-weight', $treeGrid).editable(QTKGlobal.getEditableParam('@Url.Content("~/Sys/Product/UpdateWeight")', null, true));
+    //}
+    function ExpandAllFun() {
+        $treeGrid.treetable('expandAll');
+    }
+    function CollapseAllFun() {
+        $treeGrid.treetable('collapseAll');
+        //页面打开时是全部展开，点击全部折叠后，样式会乱， 主要是 colResizable 插件没有重新计算高度的问题
+        $treeGrid.prev().children().css({ height: $treeGrid.parent().innerHeight() - 25 });
+    }
+    function AddFun() {
+        var url = '{{urlfor "ProductController.Add"}}';
+        layer.open({
+            type: 2,
+            title: '添加产品',
+            shadeClose: false,
+            shade: 0.2,
+            scrollbar: false,
+            maxmin: true,
+            shift: 1,
+            area: ['1000px', '95%'],
+            content: url,
+            btn: ['保存', '关闭'],
+            yes: function (index, layero) {
+                var iframeWin = window[layero.find('iframe')[0]['name']];
+                iframeWin.FormSubmit();
+            }
+        });
+    }
+    function EditFun(id) {
+        var url = '{{urlfor "ProductController.Edit"}}' + id;
+        layer.open({
+            type: 2,
+            title: '编辑产品',
+            shadeClose: false,
+            shade: 0.2,
+            scrollbar: false,
+            maxmin: true,
+            shift: 1,
+            area: ['1000px', '95%'],
+            content: url,
+            btn: ['保存', '关闭'],
+            yes: function (index, layero) {
+                var iframeWin = window[layero.find('iframe')[0]['name']];
+                iframeWin.FormSubmit();
+            }
+        });
+    }
+    function DeleteFun(id) {
+        var url = '{{urlfor "ProductController.Delete"}}' + "/" + id;
+        layer.confirm('删除操作无法恢复，为了不影响正常使用，请确认当前产品没有在APP端使用，确认继续吗', {
+            icon: 3, title: '请确认',
+            btn: ['确认', '取消'] //按钮
+        }, function () {
+            $.sdpost(url, { id: id }, function (data) {
+                if (data.code === 1) {
+                    layer.msg(data.msg, { icon: 1, title: '成功' });
+                    refresh();
+                }
+                else {
+                    layer.alert(data.msg, { icon: 2, title: '失败' });
+                }
+            });
+        });
+    }
+    function refresh(pk, doreveal) {
+        //保存当前页面滚动条位置    
+        var scrollTop = $(window).scrollTop();
+        pageInit();
+        //滚动到当前位置
+        $(window).scrollTop(scrollTop);
+        //高亮显示节点
+        highlight(pk, doreveal);
+    }
+    function highlight(pk, doreveal) {
+        if (pk !== null && typeof pk !== 'undefined') {
+            if (doreveal !== null && typeof doreveal !== 'undefined' && doreveal === true) {
+                //把当前节点显示出来
+                $treeGrid.treetable('reveal', pk);
+            }
+            //调用高亮显示
+            ScriptTool.highlight($treeGrid.find('tr[data-tt-id="' + pk + '"]'));
+        }
+    }
+</script>

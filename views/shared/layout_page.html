@@ -1,0 +1,214 @@
+<!-- 用于列表页 -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>{{.pageTitle}}</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"> {{template "shared/globalcss.html"}} {{.headcssjs}}
+    <!-- content样式占位 -->
+</head>
+
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white page-sidebar-fixed">
+    <div class="page-header navbar navbar-fixed-top">
+        <!-- BEGIN HEADER INNER -->
+        <div class="page-header-inner ">
+            <!-- BEGIN LOGO -->
+            <div class="page-logo">
+                <a href="#">
+                    <img src="/static/assets/qtk/img/qtk-logo.png" alt="logo" class="logo-default" />
+                </a>
+                <div class="menu-toggler sidebar-toggler">
+                    <span></span>
+                </div>
+            </div>
+            <!-- END LOGO -->
+            <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+            <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+                <span></span>
+            </a>
+            <!-- END RESPONSIVE MENU TOGGLER -->
+            <!-- BEGIN TOP NAVIGATION MENU -->
+            <div class="top-menu">
+                <div class="pull-left margin-top-10 tooltips" data-container="body" data-placement="bottom" data-original-title="请选择产品进行切换">
+                    <select class="input-medium " data-style="white" data-size="10" id="global-prodct-list"></select>
+                </div>
+                <ul class="nav navbar-nav pull-right">
+                    <!-- BEGIN USER LOGIN DROPDOWN -->
+                    <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+                    <li class="dropdown dropdown-user">
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <img alt="" class="img-circle" src="/static/assets/qtk/img/default-head.png" onerror="" />
+                            <span class="username username-hide-on-mobile">测试账号</span>
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-default">
+                            <li>
+                                <a href="{{urlfor " HomeController.ExeExit "}}">
+                                    <i class="icon-key"></i> 退出
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- END USER LOGIN DROPDOWN -->
+                </ul>
+            </div>
+            <!-- END TOP NAVIGATION MENU -->
+        </div>
+        <!-- END HEADER INNER -->
+    </div>
+    <!-- END HEADER -->
+    <!-- BEGIN HEADER & CONTENT DIVIDER -->
+    <div class="clearfix"></div>
+    <!-- END HEADER & CONTENT DIVIDER -->
+    <!-- BEGIN CONTAINER -->
+    <div class="page-container">
+        <!-- BEGIN SIDEBAR -->
+        <div class="page-sidebar-wrapper">
+            <!-- BEGIN SIDEBAR -->
+            <div class="page-sidebar navbar-collapse collapse">
+                <!-- BEGIN SIDEBAR MENU -->
+                <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200"
+                    style="padding-top: 20px">
+                    <!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
+                    <li class="sidebar-toggler-wrapper hide">
+                        <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+                        <div class="sidebar-toggler">
+                            <span></span>
+                        </div>
+                        <!-- END SIDEBAR TOGGLER BUTTON -->
+                    </li>
+                    <li class="nav-item">
+                        <a href="javascript:;" class="nav-link nav-toggle">
+                            <i class="fa fa-home"></i>
+                            <span class="title">首页</span>
+                            <span class="arrow"></span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li class="nav-item">
+                                <a href="{{urlfor " SystemController.Index "}}" class="nav-link">
+                                    <span class="title">仪表盘</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="javascript:;" class="nav-link nav-toggle">
+                            <i class="fa fa-list-alt"></i>
+                            <span class="title">基本数据管理</span>
+                            <span class="arrow "></span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li class="nav-item">
+                                <a href="{{urlfor " SubjectController.Index "}}" class="nav-link">
+                                    <span class="title"> 科目管理 </span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{urlfor " QuestionTemplateController.Index "}}" class="nav-link">
+                                    <span class="title"> 题型管理 </span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{urlfor " ExamTypeController.Index "}}" class="nav-link">
+                                    <span class="title"> 试卷类别 </span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{urlfor " QuestionKnowledgeController.Index "}}" class="nav-link">
+                                    <span class="title"> 知识单元 </span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{urlfor " QuestionKContextController.Index "}}" class="nav-link">
+                                    <span class="title"> 单元评语 </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="javascript:;" class="nav-link nav-toggle">
+                            <i class="fa fa-question-circle"></i>
+                            <span class="title">试题管理</span>
+                            <span class="arrow"></span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li class="nav-item">
+                                <a href="{{urlfor " QuestionController.Index "}}" class="nav-link">
+                                    <span class="title"> 试题列表 </span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{urlfor " QuestionImportTSController.Index "}}" class="nav-link">
+                                    <span class="title"> 试题导入 </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="javascript:;" class="nav-link nav-toggle">
+                            <i class="fa fa-gears"></i>
+                            <span class="title">系统设置</span>
+                            <span class="arrow "></span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li class="nav-item">
+                                <a href="{{urlfor " ProductController.Index "}}" class="nav-link">
+                                    <span class="title"> 产品管理 </span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{urlfor " BackendUserController.Index "}}" class="nav-link">
+                                    <span class="title"> 后台用户管理 </span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{urlfor " CacheController.Index "}}" class="nav-link">
+                                    <span class="title"> 缓存管理 </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- END SIDEBAR MENU -->
+            </div>
+            <!-- END SIDEBAR -->
+        </div>
+        <!-- END SIDEBAR -->
+        <!-- BEGIN CONTENT -->
+        <div class="page-content-wrapper">
+            <!-- BEGIN CONTENT BODY -->
+            <div class="page-content">
+                {{.LayoutContent}}
+            </div>
+            <!-- END CONTENT BODY -->
+        </div>
+        <!-- END CONTENT -->
+    </div>
+    <!-- END CONTAINER -->
+    <!-- BEGIN FOOTER -->
+    <div class="page-footer">
+        <div class="page-footer-inner">
+            2018 &copy; 泉题库
+
+        </div>
+        <div class="scroll-to-top">
+            <i class="icon-arrow-up"></i>
+        </div>
+    </div>
+    <!-- END FOOTER -->
+    {{template "shared/globaljs.html"}}
+    <script>
+        $(function () {
+            //点亮当前路径所对应的菜单
+            //QTKGlobal.SidebarMenuInit('@ViewBag.CurPath');
+            //初始化产品下拉菜单
+            //QTKGlobal.ProductTreeInit('@Url.Content("~/Sys/Product/TreeOfMine")',@(ViewBag.ProdctID), '@Url.Content("~/Sys/Product/Switch")');
+        });
+    </script> {{.footerjs}}
+</body>
+
+</html>
